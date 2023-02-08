@@ -5,7 +5,22 @@
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Installs axios library 
+```
+npm install axios 
+```
+
+### Installs vue router 
+```
+npm install vue-router 
+```
+
+### Installs vue router 
+```
+npm install vuex@next --save
+```
+
+### Compiles and hot-reloads for development  
 ```
 npm run serve
 ```
@@ -19,6 +34,8 @@ npm run build
 ```
 npm run lint
 ```
+## Made by Ifeoma N with Vuex, ☕️, akara and lots of ❤️
+
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
