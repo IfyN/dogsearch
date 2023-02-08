@@ -25,7 +25,7 @@ export default {
 
   async mounted() {
     const { breed } = this.$route.params
-    const breedImages = await axios.get(`https://dog.ceo/api/breed/${breed}/images/random/5`)
+    const breedImages = await axios.get(`https://dog.ceo/api/breed/${breed}/images/random/3`)
     const subBreedImages = breedImages.data.message
     this.subBreedImages = subBreedImages;
     // console.log({ subBreedImages })
