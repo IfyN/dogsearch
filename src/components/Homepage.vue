@@ -7,26 +7,19 @@
 </template>
 
 <script>
-import axios from "axios";
+
 export default {
   name: "Homepage",
-  data() {
-    return {
-      dogBreeds: [],
-      dogImages: [],
+  computed: {
+    dogBreeds() {
+      return this.$store.getters.getDogBreeds
+    },
+    dogImages() {
+      return this.$store.getters.getDogImages
     }
   },
   async mounted() {
-    const breedsResponse = await axios.get("https://dog.ceo/api/breeds/list")
-    const dogBreeds = breedsResponse.data.message
-    this.dogBreeds = dogBreeds
-
-    const dogImagePromises = dogBreeds.map((breed) =>
-      axios.get(`https://dog.ceo/api/breed/${breed}/images/random`))
-
-    const settledPromises = await Promise.allSettled(dogImagePromises)
-    const dogImages = settledPromises.map((promise) => promise.value.data.message)
-    this.dogImages = dogImages
+    await this.$store.dispatch('fetchDogImages');
   }
 }
 </script>
