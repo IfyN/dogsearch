@@ -5,17 +5,17 @@
 npm install
 ```
 
-### Installs axios library 
+### Install axios library 
 ```
 npm install axios 
 ```
 
-### Installs vue router 
+### Install vue router 
 ```
 npm install vue-router 
 ```
 
-### Installs vue router 
+### Install vuex
 ```
 npm install vuex@next --save
 ```
