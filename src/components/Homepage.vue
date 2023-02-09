@@ -1,5 +1,6 @@
 <template>
   <div class="body">
+    <input type="text" v-model="search" placeholder="Search dog breeds..." />
     <div class="infobox">
       <router-link v-for="(breed, index) in dogBreeds" :to="breed" :key="breed">
         <div class="infobox_content">
@@ -58,8 +59,7 @@ a {
 
 .infobox_content {
   text-align: center;
-  border: 2px solid #999999;
-  border-radius: 6px;
+  border: none;
   padding-top: 5px;
 }
 
@@ -77,5 +77,22 @@ a {
 .img_style {
   width: 300px;
   height: 300px;
+}
+
+input {
+  display: block;
+  width: 350px;
+  margin: 20px auto;
+  padding: 10px 45px;
+  background-size: 15px 15px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+input:focus {
+  outline-color: #42b983;
 }
 </style>
