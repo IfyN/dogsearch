@@ -1,6 +1,11 @@
 <template>
   <div class="body">
-    <input type="text" v-model="search" placeholder="Search dog breeds..." />
+    <div>
+      <input type="text" v-model="search" placeholder="Search dog breeds..." />
+      <ul>
+        <li class="item fruit" v-for="dog in visibleDogs" :key="dog">{{ dog }}</li>
+      </ul>
+    </div>
     <div class="infobox">
       <router-link v-for="(breed, index) in dogBreeds" :to="breed" :key="breed">
         <div class="infobox_content">
@@ -12,16 +17,39 @@
 </template>
 
 <script>
-
+import axios from "axios";
 export default {
   name: "Homepage",
+  data() {
+    return {
+      search: '',
+      dogBreedResults: []
+    }
+  },
+
+  created() {
+    this.fetchList();
+  },
+  methods: {
+    fetchList() {
+      axios.get("https://dog.ceo/api/breeds/list").then(response => {
+        this.dogBreedResults = response.data.message;
+      });
+    },
+  },
+
   computed: {
     dogBreeds() {
       return this.$store.getters.getDogBreeds
     },
     dogImages() {
       return this.$store.getters.getDogImages
-    }
+    },
+    visibleDogs() {
+      return this.dogBreedResults.filter(dog => {
+        return dog.toLowerCase().includes(this.search.toLowerCase());
+      })
+    },
   },
   async mounted() {
     await this.$store.dispatch('fetchDogImages');
@@ -94,5 +122,20 @@ input {
 
 input:focus {
   outline-color: #42b983;
+}
+
+li.item {
+  width: 350px;
+  margin: 0 auto 10px auto;
+  padding: 10px 20px;
+  color: white;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
+    rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+}
+
+li.fruit {
+  background-color: rgb(97, 62, 252);
+  cursor: pointer;
 }
 </style>
