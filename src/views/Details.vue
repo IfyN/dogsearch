@@ -13,28 +13,29 @@
   </div>
 </template>
 <script>
-import axios from 'axios';
+// import axios from 'axios';
 
 
 export default {
   name: "Details",
+  computed: {
+    subBreedImages() {
+      return this.$store.getters.getSubBreedImages;
+    },
 
-  data() {
-    return {
-      subBreedImages: [],
-      subBreeds: [],
+    subBreeds() {
+      return this.$store.getters.getSubBreeds;
     }
   },
 
   async mounted() {
     const { breed } = this.$route.params
-    const breedImages = await axios.get(`https://dog.ceo/api/breed/${breed}/images/random/3`)
-    const subBreedImages = breedImages.data.message
-    this.subBreedImages = subBreedImages;
+    await this.$store.dispatch('fetchSubBreedImages', breed);
+    await this.$store.dispatch('fetchSubBreeds', breed);
 
-    const subBreeds = await axios.get(`https://dog.ceo/api/breed/${breed}/list`)
-    this.subBreeds = subBreeds.data.message[breed];
-  }
+    //   const subBreeds = await axios.get(`https://dog.ceo/api/breed/${breed}/list`)
+    //   this.subBreeds = subBreeds.data.message[breed];
+  },
 }
 
 </script>

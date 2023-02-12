@@ -25,6 +25,14 @@ export default new Vuex.Store({
     setDogImages(state, dogImages) {
       state.dogImages = dogImages;
     },
+
+    setSubBreedImages(state, subBreedImages) {
+      state.subBreedImages = subBreedImages;
+    },
+
+    setSubBreeds(state, subBreeds){
+      state.subBreeds = subBreeds;
+    }
   },
   actions: {
     async fetchDogBreeds(context) {
@@ -44,6 +52,22 @@ export default new Vuex.Store({
         (promise) => promise.value.data.message
       );
       context.commit("setDogImages", dogImages);
+    },
+
+    async fetchSubBreedImages(context, breed) {
+      const breedImages = await axios.get(
+        `https://dog.ceo/api/breed/${breed}/images/random/3`
+      );
+      const subBreedImages = breedImages.data.message;
+      context.commit("setSubBreedImages", subBreedImages);
+    },
+
+    async fetchSubBreeds(context, breed) {
+      const response = await axios.get(
+        `https://dog.ceo/api/breed/${breed}/list`
+      );
+      const subBreeds = response.data.message[breed];
+      context.commit("setSubBreeds", subBreeds);
     },
   },
   modules: {},
