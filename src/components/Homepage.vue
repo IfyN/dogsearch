@@ -3,7 +3,7 @@
     <div>
       <input type="text" v-model="search" placeholder="Search dog breeds..." />
       <ul>
-        <li class="item fruit" v-for="dog in visibleDogs" :key="dog">{{ dog }}</li>
+        <li class="item dogitem" v-for="dog in visibleDogs" :key="dog">{{ dog }}</li>
       </ul>
     </div>
     <div class="infobox">
@@ -17,25 +17,12 @@
 </template>
 
 <script>
-import axios from "axios";
 export default {
   name: "Homepage",
   data() {
     return {
       search: '',
-      dogBreedResults: []
     }
-  },
-
-  created() {
-    this.fetchList();
-  },
-  methods: {
-    fetchList() {
-      axios.get("https://dog.ceo/api/breeds/list").then(response => {
-        this.dogBreedResults = response.data.message;
-      });
-    },
   },
 
   computed: {
@@ -45,8 +32,13 @@ export default {
     dogImages() {
       return this.$store.getters.getDogImages
     },
-    visibleDogs() {
-      return this.dogBreedResults.filter(dog => {
+    visibleDogBreed() {
+      return this.dogBreeds.filter(dog => {
+        return dog.toLowerCase().includes(this.search.toLowerCase());
+      })
+    },
+    visibleDogImage() {
+      return this.dogImages.filter(dog => {
         return dog.toLowerCase().includes(this.search.toLowerCase());
       })
     },
@@ -125,17 +117,16 @@ input:focus {
 }
 
 li.item {
-  width: 350px;
+  width: 110px;
   margin: 0 auto 10px auto;
   padding: 10px 20px;
-  color: white;
+  color: black;
   border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
     rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
 }
 
-li.fruit {
-  background-color: rgb(97, 62, 252);
+li.dogitem {
   cursor: pointer;
 }
 </style>
